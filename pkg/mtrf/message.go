@@ -105,3 +105,44 @@ func bodyString(p [17]byte) string {
 func (m *Message) Channel() uint8 {
 	return m.body[4]
 }
+
+// NewResponse создает Response из 17 байт ответа от модуля
+func NewResponse(p []uint8) (*Response, error) {
+	if len(p) != 17 {
+		return nil, fmt.Errorf("invalid message length")
+	}
+	if p[0] != 173 {
+		return nil, fmt.Errorf("invalid first byte")
+	}
+	if p[16] != 174 {
+		return nil, fmt.Errorf("invalid last byte")
+	}
+
+	x := uint8(0)
+	for i := 0; i < 15; i++ {
+		x += p[i]
+	}
+	if p[15] != x {
+		return nil, fmt.Errorf("invalid checksum")
+	}
+
+	return &Response{
+		St:   p[0],
+		Mode: p[1],
+		Ctr:  p[2],
+		Togl: p[3],
+		Ch:   p[4],
+		Cmd:  p[5],
+		Fmt:  p[6],
+		D0:   p[7],
+		D1:   p[8],
+		D2:   p[9],
+		D3:   p[10],
+		ID0:  p[11],
+		ID1:  p[12],
+		ID2:  p[13],
+		ID3:  p[14],
+		Crc:  p[15],
+		Sp:   p[16],
+	}, nil
+}
