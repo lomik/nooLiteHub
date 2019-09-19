@@ -28,6 +28,11 @@ const (
 	CtrSendF            = 8
 )
 
+// MessageLen длина отправляемых и принимаемых сообщений
+const MessageLen = 17
+
+type pkt [17]byte
+
 const (
 	// CmdOff - Выключить нагрузку
 	CmdOff uint8 = 0

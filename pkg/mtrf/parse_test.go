@@ -25,8 +25,10 @@ import "testing"
 // {173,1,0,13,44,2,0,0,0,0,0,0,0,0,0,233,174}
 func TestParse(t *testing.T) {
 	table := struct {
-		body   [17]byte
-		mode   string
-		action string
-	}{}
+		body [MessageLen]byte
+		mode string
+		cmd  string
+	}{
+		{newPkt(173, 1, 0, 14, 42, 21, 7, 227, 32, 52, 255, 0, 0, 0, 0, 56, 174), "AA", "BBB"},
+	}
 }

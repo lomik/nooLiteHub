@@ -107,7 +107,7 @@ func (m *Message) Channel() uint8 {
 }
 
 // NewResponse создает Response из 17 байт ответа от модуля
-func NewResponse(p []uint8) (*Response, error) {
+func NewResponse0(p []uint8) (*Response, error) {
 	if len(p) != 17 {
 		return nil, fmt.Errorf("invalid message length")
 	}
