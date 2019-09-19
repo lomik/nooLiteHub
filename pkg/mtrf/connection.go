@@ -24,8 +24,8 @@ func Connect(addr string) *Connection {
 	c := &Connection{
 		addr:      addr,
 		exit:      make(chan struct{}),
-		sendQueue: make(chan *Message, 64),
-		recvQueue: make(chan *Message, 64),
+		sendQueue: make(chan *Request, 64),
+		recvQueue: make(chan *Response, 64),
 		recvEvent: NewEvent(),
 	}
 	go c.worker()

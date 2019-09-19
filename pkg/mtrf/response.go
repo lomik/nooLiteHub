@@ -14,6 +14,24 @@ func NewResponse(b []byte) (*Response, error) {
 		ID1: b[12], ID2: b[13], ID3: b[14], Crc: b[15],
 		Sp: b[16],
 	}
+
+	if b[0] != 173 {
+		return nil, fmt.Errorf("wrong start byte")
+	}
+
+	if b[16] != 174 {
+		return nil, fmt.Errorf("wrong end byte")
+	}
+
+	x := uint8(0)
+	for i := 0; i < 15; i++ {
+		x += b[i]
+	}
+
+	if x != b[15] {
+		return nil, fmt.Errorf("wrong crc")
+	}
+
 	return r, nil
 }
 
