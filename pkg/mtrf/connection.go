@@ -11,15 +11,17 @@ import (
 	"github.com/jacobsa/go-serial/serial"
 )
 
+// Connection ...
 type Connection struct {
 	exit      chan struct{}
 	exitOnce  sync.Once
 	addr      string
-	sendQueue chan *Message
-	recvQueue chan *Message
+	sendQueue chan *Request
+	recvQueue chan *Response
 	recvEvent *Event
 }
 
+// Connect подключается к модулю (локальному девайсу или tcp)
 func Connect(addr string) *Connection {
 	c := &Connection{
 		addr:      addr,
@@ -32,6 +34,7 @@ func Connect(addr string) *Connection {
 	return c
 }
 
+// Close закрывает соединение
 func (c *Connection) Close() {
 	c.exitOnce.Do(func() {
 		close(c.exit)
@@ -156,7 +159,7 @@ func (c *Connection) writer(conn io.ReadWriteCloser) {
 		case <-c.exit:
 			return
 		case m := <-c.sendQueue:
-			body := m.SendPack()
+			body := m.Bytes()
 
 			log.Printf("send msg: %s\n", m.String())
 			c.recvEvent.Clear()
@@ -182,8 +185,8 @@ func (c *Connection) reader(conn io.ReadWriteCloser) {
 
 		c.recvEvent.Raise()
 
-		rs := &Message{}
-		if err := rs.RecvUnpack(buf[:]); err != nil {
+		rs, err := NewResponse(buf[:])
+		if err != nil {
 			log.Printf("recv error: %s, raw: %#v\n", err.Error(), buf)
 			return
 		}
@@ -199,10 +202,12 @@ func (c *Connection) reader(conn io.ReadWriteCloser) {
 	}
 }
 
-func (c *Connection) Recv() <-chan *Message {
+// Recv возвращает канал для получения данных от модуля
+func (c *Connection) Recv() <-chan *Response {
 	return c.recvQueue
 }
 
-func (c *Connection) Send() chan<- *Message {
+// Send возвращает каналь для оправки команд в модуль
+func (c *Connection) Send() chan<- *Request {
 	return c.sendQueue
 }
