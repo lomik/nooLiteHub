@@ -12,16 +12,16 @@ import (
 )
 
 func main() {
-	addr := flag.String("p", "/dev/ttyAMA0", "Serial port")
-	m := flag.String("m", "127.0.0.1:1883", "MQTT server")
-	t := flag.String("t", "nooLiteHub", "MQTT Root topic")
+	port := flag.String("port", "/dev/ttyAMA0", "Serial port")
+	server := flag.String("server", "127.0.0.1:1883", "MQTT server")
+	topic := flag.String("topic", "nooLiteHub", "MQTT Root topic")
 	mqttClientID := flag.String("client", "nooLiteHub", "MQTT client ID")
 	mqttUser := flag.String("user", "", "MQTT user")
 	mqttPassword := flag.String("password", "", "MQTT password")
 
-	device := mtrf.Connect(*addr)
+	device := mtrf.Connect(*port)
 
-	mqttConn, err := net.Dial("tcp", *m)
+	mqttConn, err := net.Dial("tcp", *server)
 	if err != nil {
 		log.Fatal(err)
 		return
@@ -32,7 +32,7 @@ func main() {
 	cc.ClientId = *mqttClientID
 
 	tq := make([]proto.TopicQos, 1)
-	tq[0].Topic = *t + "/#"
+	tq[0].Topic = *topic + "/#"
 	// tq[0].Qos = proto.QosAtMostOnce
 
 	if err := cc.Connect(*mqttUser, *mqttPassword); err != nil {
