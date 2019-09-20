@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
 	"log"
 	"net"
 
@@ -47,7 +46,7 @@ func main() {
 	go func() {
 		for {
 			r := <-device.Recv()
-			fmt.Printf("[mqtt send] %s: %s\n", *topic+"/raw/recv", r.String())
+			log.Printf("[mqtt send] %s: %s", *topic+"/raw/recv", r.String())
 			cc.Publish(&proto.Publish{
 				Header:    proto.Header{},
 				TopicName: *topic + "/raw/recv",
@@ -60,7 +59,7 @@ func main() {
 	for m := range cc.Incoming {
 		b := new(bytes.Buffer)
 		m.Payload.WritePayload(b)
-		fmt.Printf("[mqtt recv] %s: %s\n", m.TopicName, b.String())
+		log.Printf("[mqtt recv] %s: %s", m.TopicName, b.String())
 		// onMessage([]byte(m.TopicName), b.Bytes())
 	}
 }
