@@ -33,7 +33,7 @@ func main() {
 	cc.ClientId = *mqttClientID
 
 	tq := make([]proto.TopicQos, 1)
-	tq[0].Topic = *topic + "/#"
+	tq[0].Topic = *topic + "/write/#"
 	tq[0].Qos = proto.QosAtMostOnce
 
 	if err := cc.Connect(*mqttUser, *mqttPassword); err != nil {
@@ -43,16 +43,19 @@ func main() {
 	log.Println("connected with client id", cc.ClientId)
 	cc.Subscribe(tq)
 
+	mqttSend := func(t string, m string) {
+		log.Printf("[mqtt send] %s: %s", *topic+t, m)
+		cc.Publish(&proto.Publish{
+			Header:    proto.Header{},
+			TopicName: *topic + t,
+			Payload:   proto.BytesPayload([]byte(m)),
+		})
+	}
+
 	go func() {
 		for {
 			r := <-device.Recv()
-			log.Printf("[mqtt send] %s: %s", *topic+"/raw/recv", r.String())
-			cc.Publish(&proto.Publish{
-				Header:    proto.Header{},
-				TopicName: *topic + "/raw/recv",
-				Payload:   proto.BytesPayload([]byte(r.String())),
-			})
-			log.Println("mtrf received:\n", r)
+			mqttSend("/in/raw", r.String())
 		}
 	}()
 
