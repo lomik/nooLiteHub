@@ -27,7 +27,7 @@ func main() {
 		return
 	}
 
-	cc := mqtt.NewClientConn(conn)
+	cc := mqtt.NewClientConn(mqttConn)
 	cc.Dump = false
 	cc.ClientId = *mqttClientID
 
