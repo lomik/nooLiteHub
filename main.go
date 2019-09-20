@@ -40,7 +40,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	log.Printf("connected with client id: %#v", cc.ClientId)
+	log.Printf("connected with client id %#v", cc.ClientId)
 	cc.Subscribe(tq)
 
 	mqttSend := func(t string, m string) {
