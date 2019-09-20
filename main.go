@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"log"
@@ -56,5 +57,10 @@ func main() {
 		}
 	}()
 
-	select {}
+	for m := range cc.Incoming {
+		b := new(bytes.Buffer)
+		m.Payload.WritePayload(b)
+		fmt.Printf("[mqtt recv] %s: %s\n", m.TopicName, b.String())
+		// onMessage([]byte(m.TopicName), b.Bytes())
+	}
 }
