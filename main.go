@@ -44,7 +44,7 @@ func main() {
 	cc.Subscribe(tq)
 
 	mqttSend := func(t string, m string) {
-		log.Printf("[mqtt send] %s: %s", *topic+t, m)
+		log.Printf("[mqtt] <- %s: %s", *topic+t, m)
 		cc.Publish(&proto.Publish{
 			Header:    proto.Header{},
 			TopicName: *topic + t,
