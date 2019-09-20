@@ -40,7 +40,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	log.Println("connected with client id", cc.ClientId)
+	log.Printf("connected with client id: %#v", cc.ClientId)
 	cc.Subscribe(tq)
 
 	mqttSend := func(t string, m string) {
@@ -62,7 +62,7 @@ func main() {
 	for m := range cc.Incoming {
 		b := new(bytes.Buffer)
 		m.Payload.WritePayload(b)
-		log.Printf("[mqtt recv] %s: %s", m.TopicName, b.String())
+		log.Printf("[mqtt] -> %s: %s", m.TopicName, b.String())
 		// onMessage([]byte(m.TopicName), b.Bytes())
 	}
 }
