@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net"
 
@@ -33,7 +34,7 @@ func main() {
 
 	tq := make([]proto.TopicQos, 1)
 	tq[0].Topic = *topic + "/#"
-	// tq[0].Qos = proto.QosAtMostOnce
+	tq[0].Qos = proto.QosAtMostOnce
 
 	if err := cc.Connect(*mqttUser, *mqttPassword); err != nil {
 		log.Fatal(err)
@@ -45,6 +46,12 @@ func main() {
 	go func() {
 		for {
 			r := <-device.Recv()
+			fmt.Printf("[mqtt send] %s: %s\n", *topic+"/raw/recv", r.String())
+			cc.Publish(&proto.Publish{
+				Header:    proto.Header{},
+				TopicName: *topic + "/raw/recv",
+				Payload:   proto.BytesPayload([]byte(r.String())),
+			})
 			log.Println("mtrf received:\n", r)
 		}
 	}()
