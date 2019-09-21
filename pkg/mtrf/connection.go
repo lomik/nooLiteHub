@@ -191,7 +191,7 @@ func (c *Connection) reader(conn io.ReadWriteCloser) {
 			return
 		}
 
-		log.Printf("recv msg: %s\n", rs.String())
+		// log.Printf("recv msg: %s\n", rs.String())
 
 		select {
 		case c.recvQueue <- rs:
