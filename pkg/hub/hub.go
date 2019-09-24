@@ -85,8 +85,7 @@ func (h *Hub) mqttWorker() {
 		log.Printf("[mqtt] -> %s: %s", m.TopicName, b.String())
 
 		topicName := m.TopicName
-		topicName = strings.TrimPrefix(topicName, h.options.Topic)
-		topicName = strings.TrimPrefix(topicName, "/")
+		topicName = strings.TrimPrefix(topicName, h.options.Topic+"/write/")
 		h.handleWrite(topicName, b.String())
 	}
 }
@@ -100,6 +99,12 @@ func (h *Hub) deviceWorker() {
 
 // Обработчик сообщений от mqtt
 func (h *Hub) handleWrite(topic string, payload string) {
+	if topic == "raw" {
+
+	}
+}
+
+func (h *Hub) handleWriteRaw(payload string) {
 
 }
 
