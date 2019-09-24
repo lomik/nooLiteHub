@@ -44,7 +44,8 @@ func MustResponse(b []byte) *Response {
 	return r
 }
 
-func (r *Response) String() string {
+// JSON возвращает сериализованное представление Response
+func (r *Response) JSON() string {
 	return fmt.Sprintf("[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d]",
 		r.St, r.Mode, r.Ctr, r.Togl,
 		r.Ch, r.Cmd, r.Fmt, r.D0,

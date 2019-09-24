@@ -93,19 +93,24 @@ func (h *Hub) mqttWorker() {
 func (h *Hub) deviceWorker() {
 	for {
 		r := <-h.device.Recv()
-		h.Publish("in/raw", r.String())
+		h.Publish("in/raw", r.JSON())
 	}
+}
+
+func (h *Hub) onError(err error) {
+	h.Publish("error", err.Error())
 }
 
 // Обработчик сообщений от mqtt
 func (h *Hub) handleWrite(topic string, payload string) {
 	if topic == "raw" {
-
+		r, err := mtrf.JSONRequest([]byte(payload))
+		if err != nil {
+			h.onError(err)
+			return
+		}
+		h.device.Send() <- r
 	}
-}
-
-func (h *Hub) handleWriteRaw(payload string) {
-
 }
 
 // Loop ... . @TODO: выходить когда порвалась связь с брокером или модулем
