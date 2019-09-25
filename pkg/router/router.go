@@ -103,5 +103,7 @@ func (r *Router) Route(path string, ctx interface{}) error {
 		}
 	}
 
+	e.callback(ctx)
+
 	return nil
 }
