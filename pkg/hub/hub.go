@@ -85,7 +85,12 @@ func (h *Hub) deviceWorker() {
 	for {
 		r := <-h.device.Recv()
 		h.Publish("in/raw", r.JSON())
+		h.expandResponse(r)
 	}
+}
+
+func (h *Hub) expandResponse(r *mtrf.Response) {
+
 }
 
 func (h *Hub) onError(err error) {

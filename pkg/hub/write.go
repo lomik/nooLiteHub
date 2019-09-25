@@ -69,6 +69,10 @@ func (h *Hub) init() {
 	h.write(":mode/:ch/bind", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: ctx.mode, Ch: ctx.ch, Cmd: mtrf.CmdBind})
 	})
+
+	h.write("tx-f/:ch/read_state", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
+	})
 }
 
 // регистрирует callback на входящее mqtt сообщение
