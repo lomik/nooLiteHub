@@ -31,7 +31,9 @@ func TestLookup(t *testing.T) {
 	}
 
 	addPath("rx/:ch/on")
+	addPath("raw")
 
 	test("rx/42/on", "rx/:ch/on", map[string]string{"ch": "42"})
 	test("rx/42/off", "", nil)
+	test("raw", "raw", map[string]string{})
 }

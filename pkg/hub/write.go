@@ -29,6 +29,7 @@ func (h *Hub) init() {
 	})
 
 	h.write("raw", func(c *writeContext) {
+		fmt.Println("raw callback")
 		r, err := mtrf.JSONRequest([]byte(c.payload))
 		if err != nil {
 			h.onError(err)
