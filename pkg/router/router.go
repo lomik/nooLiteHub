@@ -1,6 +1,9 @@
 package router
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type entry struct {
 	callback    func(ctx interface{})
@@ -86,5 +89,19 @@ func (r *Router) lookup(root *entry, path []string) (*entry, map[string]string) 
 
 // Route ...
 func (r *Router) Route(path string, ctx interface{}) error {
+	e, m := r.lookup(r.root, strings.Split(path, "/"))
+	if e == nil || e.callback == nil {
+		return fmt.Errorf("no route for %#v", path)
+	}
+
+	for p, v := range m {
+		parser := r.params[p]
+		if parser != nil {
+			if err := parser(v, ctx); err != nil {
+				return err
+			}
+		}
+	}
+
 	return nil
 }
