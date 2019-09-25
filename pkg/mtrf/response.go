@@ -54,3 +54,13 @@ func (r *Response) JSON() string {
 		r.Sp,
 	)
 }
+
+func (r *Response) String() string {
+	return fmt.Sprintf("Response{St: %d, Mode: %d, Ctr: %d, Togl: %d, Ch: %d, Cmd: %d, Fmt: %d, D0: %d, D1: %d, D2: %d, D3: %d, ID0: %d, ID1: %d, ID2: %d, ID3: %d, Crc: %d, Sp: %d}",
+		r.St, r.Mode, r.Ctr, r.Togl,
+		r.Ch, r.Cmd, r.Fmt, r.D0,
+		r.D1, r.D2, r.D3, r.ID0,
+		r.ID1, r.ID2, r.ID3, r.Crc,
+		r.Sp,
+	)
+}

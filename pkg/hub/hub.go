@@ -89,10 +89,6 @@ func (h *Hub) deviceWorker() {
 	}
 }
 
-func (h *Hub) expandResponse(r *mtrf.Response) {
-
-}
-
 func (h *Hub) onError(err error) {
 	h.Publish("error", err.Error())
 }
