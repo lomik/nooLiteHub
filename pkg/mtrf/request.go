@@ -7,7 +7,7 @@ import (
 
 // JSON возвращает сериализованное представление Request
 func (r *Request) JSON() string {
-	r.crc(0)
+	r.crc()
 	return fmt.Sprintf("[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d]",
 		r.St, r.Mode, r.Ctr, r.Res,
 		r.Ch, r.Cmd, r.Fmt, r.D0,
