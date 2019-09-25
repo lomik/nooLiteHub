@@ -64,3 +64,8 @@ func (r *Response) String() string {
 		r.Sp,
 	)
 }
+
+// Device returns device id with "base 16, upper-case, two characters per byte" encoding
+func (r *Response) Device() string {
+	return fmt.Sprintf("%X", []byte{r.ID0, r.ID1, r.ID2, r.ID3})
+}

@@ -13,6 +13,6 @@ func (h *Hub) expandResponse(r *mtrf.Response) {
 
 	switch r.Cmd {
 	case mtrf.CmdSendState:
-		fmt.Println(r.String())
+		fmt.Println(r.String(), r.Device())
 	}
 }
