@@ -7,6 +7,7 @@ import (
 
 // JSON возвращает сериализованное представление Request
 func (r *Request) JSON() string {
+	r.crc(0)
 	return fmt.Sprintf("[%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d]",
 		r.St, r.Mode, r.Ctr, r.Res,
 		r.Ch, r.Cmd, r.Fmt, r.D0,
@@ -17,6 +18,7 @@ func (r *Request) JSON() string {
 }
 
 func (r *Request) String() string {
+	r.crc()
 	return fmt.Sprintf("Request{St: %d, Mode: %d, Ctr: %d, Res: %d, Ch: %d, Cmd: %d, Fmt: %d, D0: %d, D1: %d, D2: %d, D3: %d, ID0: %d, ID1: %d, ID2: %d, ID3: %d, Crc: %d, Sp: %d}",
 		r.St, r.Mode, r.Ctr, r.Res,
 		r.Ch, r.Cmd, r.Fmt, r.D0,
@@ -24,6 +26,13 @@ func (r *Request) String() string {
 		r.ID1, r.ID2, r.ID3, r.Crc,
 		r.Sp,
 	)
+}
+
+func (r *Request) crc() {
+	b := r.Bytes()
+	r.St = b[0]
+	r.Crc = b[15]
+	r.Sp = b[16]
 }
 
 // Bytes возращает массив байт для отправки модулю.
