@@ -6,15 +6,6 @@ package mtrf
 // type Device uint8
 
 // const (
-// 	ModeTX      uint8 = 0
-// 	ModeRX            = 1
-// 	ModeTXF           = 2
-// 	ModeRXF           = 3
-// 	ModeService       = 4
-// 	ModeUpgrade       = 5
-// )
-
-// const (
 // 	CtrSend         uint8 = 0
 // 	CtrBroadcast          = 1
 // 	CtrRecv               = 2

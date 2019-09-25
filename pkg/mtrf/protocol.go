@@ -6,6 +6,21 @@ package mtrf
 const MessageLen = 17
 
 const (
+	// ModeTX - режим nooLite TX
+	ModeTX uint8 = 0
+	// ModeRX - режим nooLite RX
+	ModeRX = 1
+	// ModeTXF - режим nooLite-F TX
+	ModeTXF = 2
+	// ModeRXF - режим nooLite-F RX
+	ModeRXF = 3
+	// ModeService - сервисный режим работы с nooLite-F
+	ModeService = 4
+	// ModeUpgrade - режим обновления ПО nooLite-F
+	ModeUpgrade = 5
+)
+
+const (
 	// CmdOff - Выключить нагрузку
 	CmdOff uint8 = 0
 	// CmdBrightDown - Запускает плавное понижение яркости
