@@ -161,7 +161,7 @@ func (c *Connection) writer(conn io.ReadWriteCloser) {
 		case m := <-c.sendQueue:
 			body := m.Bytes()
 
-			log.Printf("send msg: %s\n", m.String())
+			// log.Printf("send msg: %s\n", m.String())
 			c.recvEvent.Clear()
 
 			if _, err := conn.Write(body); err != nil {

@@ -1,15 +1,14 @@
 package hub
 
 import (
-	"bytes"
 	"log"
 	"net"
-	"strings"
 
 	proto "github.com/huin/mqtt"
 	"github.com/jeffallen/mqtt"
 
 	"github.com/lomik/nooLiteHub/pkg/mtrf"
+	"github.com/lomik/nooLiteHub/pkg/router"
 )
 
 // Options ...
@@ -23,19 +22,24 @@ type Options struct {
 
 // Hub ...
 type Hub struct {
-	options    Options
-	mqttConn   net.Conn
-	mqttClient *mqtt.ClientConn
-	device     *mtrf.Connection
+	options     Options
+	mqttConn    net.Conn
+	mqttClient  *mqtt.ClientConn
+	device      *mtrf.Connection
+	writeRouter *router.Router
 }
 
 // New создает инстанс Hub и подключается к брокеру
 // Возвращает ошибку если не получилось подключиться
 func New(device *mtrf.Connection, options Options) (*Hub, error) {
 	h := &Hub{
-		options: options,
-		device:  device,
+		options:     options,
+		device:      device,
+		writeRouter: router.New(),
 	}
+
+	// register routes
+	h.init()
 
 	// подключиться к порту брокера
 	mqttConn, err := net.Dial("tcp", h.options.Broker)
@@ -77,19 +81,6 @@ func (h *Hub) Publish(topic string, payload string) {
 	})
 }
 
-// ждет новые события из mqtt
-func (h *Hub) mqttWorker() {
-	for m := range h.mqttClient.Incoming {
-		b := new(bytes.Buffer)
-		m.Payload.WritePayload(b)
-		log.Printf("[mqtt] -> %s: %s", m.TopicName, b.String())
-
-		topicName := m.TopicName
-		topicName = strings.TrimPrefix(topicName, h.options.Topic+"/write/")
-		h.handleWrite(topicName, b.String())
-	}
-}
-
 func (h *Hub) deviceWorker() {
 	for {
 		r := <-h.device.Recv()
@@ -101,16 +92,9 @@ func (h *Hub) onError(err error) {
 	h.Publish("error", err.Error())
 }
 
-// Обработчик сообщений от mqtt
-func (h *Hub) handleWrite(topic string, payload string) {
-	if topic == "raw" {
-		r, err := mtrf.JSONRequest([]byte(payload))
-		if err != nil {
-			h.onError(err)
-			return
-		}
-		h.device.Send() <- r
-	}
+func (h *Hub) sendRequest(r *mtrf.Request) {
+	h.device.Send() <- r
+	h.Publish("out/raw", r.JSON())
 }
 
 // Loop ... . @TODO: выходить когда порвалась связь с брокером или модулем
