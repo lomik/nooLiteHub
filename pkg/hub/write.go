@@ -38,15 +38,15 @@ func (h *Hub) init() {
 	})
 
 	h.write("tx/:ch/on", func(c *writeContext) {
-
+		h.sendRequest(&mtrf.Request{Ch: c.ch, Cmd: mtrf.CmdOn})
 	})
 
 	h.write("tx/:ch/off", func(c *writeContext) {
-
+		h.sendRequest(&mtrf.Request{Ch: c.ch, Cmd: mtrf.CmdOff})
 	})
 
 	h.write("tx/:ch/switch", func(c *writeContext) {
-
+		h.sendRequest(&mtrf.Request{Ch: c.ch, Cmd: mtrf.CmdSwitch})
 	})
 }
 
