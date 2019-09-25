@@ -41,7 +41,7 @@ func (h *Hub) init() {
 		if !ok {
 			return fmt.Errorf("unknown mode %#v", value)
 		}
-		ctx.(*writeContext).ch = uint8(i)
+		ctx.(*writeContext).mode = m
 		return nil
 	})
 
