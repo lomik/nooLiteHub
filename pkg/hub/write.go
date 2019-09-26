@@ -12,10 +12,10 @@ import (
 
 type writeContext struct {
 	ch      uint8
-	d0      uint8
-	d1      uint8
-	d2      uint8
-	d3      uint8
+	id0     uint8
+	id1     uint8
+	id2     uint8
+	id3     uint8
 	payload string
 }
 
@@ -42,10 +42,10 @@ func (h *Hub) init() {
 			return err
 		}
 
-		ctx.(*writeContext).d0 = uint8((v >> 24) % 256)
-		ctx.(*writeContext).d1 = uint8((v >> 16) % 256)
-		ctx.(*writeContext).d2 = uint8((v >> 8) % 256)
-		ctx.(*writeContext).d3 = uint8(v % 256)
+		ctx.(*writeContext).id0 = uint8((v >> 24) % 256)
+		ctx.(*writeContext).id1 = uint8((v >> 16) % 256)
+		ctx.(*writeContext).id2 = uint8((v >> 8) % 256)
+		ctx.(*writeContext).id3 = uint8(v % 256)
 		return nil
 	})
 
@@ -97,7 +97,7 @@ func (h *Hub) init() {
 	})
 
 	h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, D0: ctx.d0, D1: ctx.d1, D2: ctx.d2, D3: ctx.d3, Cmd: mtrf.CmdReadState})
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
 	})
 }
 
