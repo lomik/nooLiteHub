@@ -29,15 +29,6 @@ func (h *Hub) init() {
 		return nil
 	})
 
-	h.writeRouter.AddParam("mode", func(value string, ctx interface{}) error {
-		m, ok := modes[value]
-		if !ok {
-			return fmt.Errorf("unknown mode %#v", value)
-		}
-		ctx.(*writeContext).mode = m
-		return nil
-	})
-
 	h.write("raw", func(ctx *writeContext) {
 		r, err := mtrf.JSONRequest([]byte(ctx.payload))
 		if err != nil {
