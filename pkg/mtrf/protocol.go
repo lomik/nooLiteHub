@@ -21,6 +21,27 @@ const (
 )
 
 const (
+	// CtrSend - Передать команду
+	CtrSend uint8 = 0
+	// CtrBroadcast - Передать широковещательную команду (одновременно всем устройствам на канале CH)
+	CtrBroadcast = 1
+	// CtrRecv - Считать ответ (состояние приѐмного буфера)
+	CtrRecv = 2
+	// CtrBindOn - Включить привязку
+	CtrBindOn = 3
+	// CtrBindOff - Выключить привязку
+	CtrBindOff = 4
+	// CtrClearChannel - Очистить ячейку (канал)
+	CtrClearChannel = 5
+	// CtrClearAll - Очистить память (все каналы)
+	CtrClearAll = 6
+	// CtrUnBind - Отвязать адрес от канала
+	CtrUnBind = 7
+	// CtrSendF - Передать команду по указанному адресу nooLite-F
+	CtrSendF = 8
+)
+
+const (
 	// CmdOff - Выключить нагрузку
 	CmdOff uint8 = 0
 	// CmdBrightDown - Запускает плавное понижение яркости

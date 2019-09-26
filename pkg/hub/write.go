@@ -97,7 +97,7 @@ func (h *Hub) init() {
 	})
 
 	h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ctr: mtrf.CtrSendF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
 	})
 }
 
