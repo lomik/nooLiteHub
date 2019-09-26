@@ -12,7 +12,10 @@ import (
 
 type writeContext struct {
 	ch      uint8
-	mode    uint8
+	d0      uint8
+	d1      uint8
+	d2      uint8
+	d3      uint8
 	payload string
 }
 
@@ -26,6 +29,23 @@ func (h *Hub) init() {
 			return fmt.Errorf("ch value %d out of range [0, 63]", i)
 		}
 		ctx.(*writeContext).ch = uint8(i)
+		return nil
+	})
+
+	h.writeRouter.AddParam("device", func(value string, ctx interface{}) error {
+		if len(value) != 8 {
+			return fmt.Errorf("invalid length of device id, expected 8")
+		}
+
+		v, err := strconv.ParseInt(value, 16, 64)
+		if err != nil {
+			return err
+		}
+
+		ctx.(*writeContext).d0 = uint8((v >> 24) % 256)
+		ctx.(*writeContext).d1 = uint8((v >> 16) % 256)
+		ctx.(*writeContext).d2 = uint8((v >> 8) % 256)
+		ctx.(*writeContext).d3 = uint8(v % 256)
 		return nil
 	})
 
@@ -74,6 +94,10 @@ func (h *Hub) init() {
 
 	h.write("tx-f/:ch/read_state", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
+	})
+
+	h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, D0: ctx.d0, D1: ctx.d1, D2: ctx.d2, D3: ctx.d3, Cmd: mtrf.CmdReadState})
 	})
 }
 
