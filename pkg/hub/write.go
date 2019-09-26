@@ -29,13 +29,6 @@ func (h *Hub) init() {
 		return nil
 	})
 
-	modes := map[string]uint8{
-		"tx":   mtrf.ModeTX,
-		"rx":   mtrf.ModeRX,
-		"tx-f": mtrf.ModeTXF,
-		"rx-f": mtrf.ModeRXF,
-	}
-
 	h.writeRouter.AddParam("mode", func(value string, ctx interface{}) error {
 		m, ok := modes[value]
 		if !ok {
@@ -54,20 +47,38 @@ func (h *Hub) init() {
 		h.sendRequest(r)
 	})
 
-	h.write(":mode/:ch/on", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: ctx.mode, Ch: ctx.ch, Cmd: mtrf.CmdOn})
+	// TX topics
+	h.write("tx/:ch/on", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdOn})
 	})
 
-	h.write(":mode/:ch/off", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: ctx.mode, Ch: ctx.ch, Cmd: mtrf.CmdOff})
+	h.write("tx/:ch/off", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdOff})
 	})
 
-	h.write(":mode/:ch/switch", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: ctx.mode, Ch: ctx.ch, Cmd: mtrf.CmdSwitch})
+	h.write("tx/:ch/switch", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdSwitch})
 	})
 
-	h.write(":mode/:ch/bind", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: ctx.mode, Ch: ctx.ch, Cmd: mtrf.CmdBind})
+	h.write("tx/:ch/bind", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdBind})
+	})
+
+	// TX-F topics
+	h.write("tx-f/:ch/on", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOn})
+	})
+
+	h.write("tx-f/:ch/off", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOff})
+	})
+
+	h.write("tx-f/:ch/switch", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdSwitch})
+	})
+
+	h.write("tx-f/:ch/bind", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdBind})
 	})
 
 	h.write("tx-f/:ch/read_state", func(ctx *writeContext) {
