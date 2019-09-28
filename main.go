@@ -20,6 +20,8 @@ func main() {
 	mqttUser := flag.String("user", "", "MQTT user")
 	mqttPassword := flag.String("password", "", "MQTT password")
 
+	flag.Parse()
+
 	device := mtrf.Connect(*port)
 
 	h, err := hub.New(device, hub.Options{
