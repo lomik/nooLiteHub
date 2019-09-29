@@ -1,6 +1,9 @@
 package mtrf
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // NewResponse создает инстанс Response из байт, полученных от модуля
 func NewResponse(b []byte) (*Response, error) {
@@ -68,4 +71,20 @@ func (r *Response) String() string {
 // Device returns device id with "base 16, upper-case, two characters per byte" encoding
 func (r *Response) Device() string {
 	return fmt.Sprintf("%X", []byte{r.ID0, r.ID1, r.ID2, r.ID3})
+}
+
+// JSONResponse парсит json-массив из 17 чисел
+func JSONResponse(payload []byte) (*Response, error) {
+	p := make([]byte, 17)
+
+	err := json.Unmarshal(payload, &p)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(p) != 17 {
+		return nil, fmt.Errorf("message length != 17")
+	}
+
+	return NewResponse(p)
 }

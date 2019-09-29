@@ -84,8 +84,10 @@ func (h *Hub) Publish(topic string, payload string) {
 func (h *Hub) deviceWorker() {
 	for {
 		r := <-h.device.Recv()
-		h.Publish("in/raw", r.JSON())
-		h.expandResponse(r)
+		h.Publish("recv/raw", r.JSON())
+		for k, v := range expandResponse(r) {
+			h.Publish(k, v)
+		}
 	}
 }
 
@@ -95,7 +97,7 @@ func (h *Hub) onError(err error) {
 
 func (h *Hub) sendRequest(r *mtrf.Request) {
 	h.device.Send() <- r
-	h.Publish("out/raw", r.JSON())
+	h.Publish("sent/raw", r.JSON())
 }
 
 // Loop ... . @TODO: выходить когда порвалась связь с брокером или модулем
