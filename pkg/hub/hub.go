@@ -86,7 +86,7 @@ func (h *Hub) deviceWorker() {
 		r := <-h.device.Recv()
 		h.Publish("recv/raw", r.JSON())
 		for k, v := range expandResponse(r) {
-			h.Publish(k, v)
+			h.Publish("recv/"+k, v)
 		}
 	}
 }
