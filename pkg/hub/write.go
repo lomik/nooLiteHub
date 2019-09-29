@@ -96,9 +96,21 @@ func (h *Hub) init() {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
 	})
 
-	h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ctr: mtrf.CtrSendF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
+	h.write("tx-f/:ch/read_state/0", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
 	})
+
+	h.write("tx-f/:ch/read_state/1", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState, Fmt: 1})
+	})
+
+	h.write("tx-f/:ch/read_state/2", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState, Fmt: 2})
+	})
+
+	// h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
+	// 	h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ctr: mtrf.CtrSendF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
+	// })
 }
 
 // регистрирует callback на входящее mqtt сообщение
