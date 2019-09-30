@@ -76,39 +76,39 @@ func (h *Hub) init() {
 	})
 
 	// TX-F topics
-	h.write("tx-f/:ch/on", func(ctx *writeContext) {
+	h.write("txf/:ch/on", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOn})
 	})
 
-	h.write("tx-f/:ch/off", func(ctx *writeContext) {
+	h.write("txf/:ch/off", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOff})
 	})
 
-	h.write("tx-f/:ch/switch", func(ctx *writeContext) {
+	h.write("txf/:ch/switch", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdSwitch})
 	})
 
-	h.write("tx-f/:ch/bind", func(ctx *writeContext) {
+	h.write("txf/:ch/bind", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdBind})
 	})
 
-	h.write("tx-f/:ch/read_state", func(ctx *writeContext) {
+	h.write("txf/:ch/state", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
 	})
 
-	h.write("tx-f/:ch/read_state/0", func(ctx *writeContext) {
+	h.write("txf/:ch/state0", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState})
 	})
 
-	h.write("tx-f/:ch/read_state/1", func(ctx *writeContext) {
+	h.write("txf/:ch/state1", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState, Fmt: 1})
 	})
 
-	h.write("tx-f/:ch/read_state/2", func(ctx *writeContext) {
+	h.write("txf/:ch/state2", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdReadState, Fmt: 2})
 	})
 
-	// h.write("tx-f/:ch/:device/read_state", func(ctx *writeContext) {
+	// h.write("txf/:ch/:device/read_state", func(ctx *writeContext) {
 	// 	h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ctr: mtrf.CtrSendF, Ch: ctx.ch, ID0: ctx.id0, ID1: ctx.id1, ID2: ctx.id2, ID3: ctx.id3, Cmd: mtrf.CmdReadState})
 	// })
 }

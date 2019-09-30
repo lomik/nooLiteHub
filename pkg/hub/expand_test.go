@@ -12,9 +12,9 @@ func TestExpandResponse(t *testing.T) {
 
 	table := map[string](map[string]string){
 		"[173,2,0,0,7,130,0,2,0,1,255,0,0,203,182,187,174]": {
-			"tx-f/7/0000CBB6/state/bind":       "off",
-			"tx-f/7/0000CBB6/state/brightness": "255",
-			"tx-f/7/0000CBB6/state/power":      "on",
+			"txf/7/0000CBB6/state/bind":       "off",
+			"txf/7/0000CBB6/state/brightness": "255",
+			"txf/7/0000CBB6/state/power":      "on",
 		},
 	}
 

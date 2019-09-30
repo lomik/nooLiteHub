@@ -33,16 +33,16 @@ func expandResponse(r *mtrf.Response) (topicPayload map[string]string) {
 	case mtrf.CmdSendState:
 		switch r.Fmt {
 		case 0:
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/power", r.Ch, r.Device())] = statePower[r.D2&0xf]
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/bind", r.Ch, r.Device())] = stateOnOff[r.D2>>7]
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/brightness", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D3)
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/power", r.Ch, r.Device())] = statePower[r.D2&0xf]
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/bind", r.Ch, r.Device())] = stateOnOff[r.D2>>7]
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/brightness", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D3)
 		case 1:
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/input", r.Ch, r.Device())] = stateOnOff[r.D2]
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/noolite_disabled_temporary", r.Ch, r.Device())] = stateBoolean[(r.D3>>1)&0x1]
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/noolite_disabled", r.Ch, r.Device())] = stateBoolean[r.D3&0x1]
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/input", r.Ch, r.Device())] = stateOnOff[r.D2]
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/noolite_disabled_temporary", r.Ch, r.Device())] = stateBoolean[(r.D3>>1)&0x1]
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/noolite_disabled", r.Ch, r.Device())] = stateBoolean[r.D3&0x1]
 		case 2:
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/free_slots/noolite", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D2)
-			topicPayload[fmt.Sprintf("tx-f/%d/%s/state/free_slots/noolite-f", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D3)
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/free_slots_noolite", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D2)
+			topicPayload[fmt.Sprintf("txf/%d/%s/state/free_slots_noolite_f", r.Ch, r.Device())] = fmt.Sprintf("%d", r.D3)
 		}
 	}
 
