@@ -83,6 +83,10 @@ func expandResponse(r *mtrf.Response) (topicPayload map[string]string) {
 			set("state/free_slots_noolite", r.D2)
 			set("state/free_slots_noolite_f", r.D3)
 		}
+	case mtrf.CmdBrightBack:
+		set("bright_back", "")
+	case mtrf.CmdStopReg:
+		set("stop_reg", "")
 	case mtrf.CmdSensTempHumi:
 		t := int(r.D0) + (int(r.D1&0xf) << 8)
 		d := sensorDevice[(r.D1&0x70)>>4]
