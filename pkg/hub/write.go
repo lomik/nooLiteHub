@@ -110,12 +110,12 @@ func (h *Hub) init() {
 
 	// RX
 	h.write("rx/:ch/bind", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeRX, Ch: ctx.ch, Cmd: mtrf.CmdBind})
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeRX, Ch: ctx.ch, Ctr: mtrf.CtrBindOn})
 	})
 
 	// RX-F
 	h.write("rxf/:ch/bind", func(ctx *writeContext) {
-		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeRXF, Ch: ctx.ch, Cmd: mtrf.CmdBind})
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeRXF, Ch: ctx.ch, Ctr: mtrf.CtrBindOn})
 	})
 
 	// h.write("txf/:ch/:device/read_state", func(ctx *writeContext) {
