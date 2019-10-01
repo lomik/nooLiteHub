@@ -16,6 +16,12 @@ func TestExpandResponse(t *testing.T) {
 			"txf/7/0000CBB6/state/brightness": "255",
 			"txf/7/0000CBB6/state/power":      "on",
 		},
+		"[173,1,0,16,42,21,7,205,32,48,255,0,0,0,0,32,174]": {
+			"rx/42/sensor/temperature": "20.5",
+			"rx/42/sensor/humidity":    "48",
+			"rx/42/sensor/low_battery": "false",
+			"rx/42/sensor/device":      "PT111",
+		},
 	}
 
 	for body, expected := range table {
