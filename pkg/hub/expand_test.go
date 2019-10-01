@@ -22,6 +22,12 @@ func TestExpandResponse(t *testing.T) {
 			"rx/42/sensor/low_battery": "false",
 			"rx/42/sensor/device":      "PT111",
 		},
+		"[173,1,0,7,44,0,0,0,0,0,0,0,0,0,0,225,174]": {
+			"rx/44/off": "",
+		},
+		"[173,1,0,8,44,2,0,0,0,0,0,0,0,0,0,228,174]": {
+			"rx/44/on": "",
+		},
 	}
 
 	for body, expected := range table {
