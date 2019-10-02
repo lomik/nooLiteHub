@@ -93,10 +93,10 @@ func expandResponse(r *mtrf.Response) (topicPayload map[string]string) {
 		if d == "" {
 			d = "unknown"
 		}
-		set("sensor/temperature", fmt.Sprintf("%d.%d", t/10, t%10))
-		set("sensor/humidity", r.D2)
-		set("sensor/low_battery", stateBoolean[r.D1>>7])
-		set("sensor/device", d)
+		set("temperature", fmt.Sprintf("%d.%d", t/10, t%10))
+		set("humidity", r.D2)
+		set("low_battery", stateBoolean[r.D1>>7])
+		set("device", d)
 	}
 
 	return

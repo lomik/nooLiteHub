@@ -54,6 +54,28 @@ recv/txf/:ch/:device/state/noolite_disabled | false,true | Прием nooLite з
 recv/txf/:ch/:device/state/free_slots_noolite | 0..32 | Количество свободных ячеек для привязки nooLite
 recv/txf/:ch/:device/state/free_slots_noolite_f | 0..32 | Количество свободных ячеек для привязки nooLite-F
 
+
+### Пульты
+
+Топик | Сообщение | Описание
+------------ | ------------- | ------
+write/rx/:ch/bind |  | Привязать выключатель
+recv/rx/:ch/on | | Выключить нагрузку
+recv/rx/:ch/off | | Включить нагрузку
+recv/rx/:ch/switch | | Включить или выключить нагрузку
+recv/rx/:ch/bright_back | | Запущено плавное изменение яркости в обратном направлении
+recv/rx/:ch/stop_reg |  | Плавное изменение яркости завершено
+
+### Сенсоры температуры и влажности
+
+Топик | Сообщение | Описание
+------------ | ------------- | ------
+write/rx/:ch/bind |  | Привязать сенсор
+recv/rx/:ch/temperature | 22.7 | Температура
+recv/rx/:ch/humidity | 42 | Влажность
+recv/rx/:ch/low_battery | false,true | Низкий уровень заряда батареи
+recv/rx/:ch/device | PT111,PT112,unknown | Модель устройства
+
 ## Примеры
 
 Везде в примерах используется число 15 в качестве номера канала, с которым производятся действия. В качестве консольного клиента MQTT используется mosquitto_pub
