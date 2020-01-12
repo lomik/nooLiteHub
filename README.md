@@ -88,21 +88,21 @@ recv/rx/:ch/device | PT111,PT112,unknown | Модель устройства
 1. Перевести силовой блок в режим привязки
 2. Послать сообщение
 ```
-mosquitto_pub -t nooLiteHub/write/tx-f/15/bind -m ""
+mosquitto_pub -t nooLiteHub/write/txf/15/bind -m ""
 ```
 
 **Включить**
 ```
-mosquitto_pub -t nooLiteHub/write/tx-f/15/on -m ""
+mosquitto_pub -t nooLiteHub/write/txf/15/on -m ""
 ```
 
 **Выключить**
 ```
-mosquitto_pub -t nooLiteHub/write/tx-f/15/off -m ""
+mosquitto_pub -t nooLiteHub/write/txf/15/off -m ""
 ```
 
 **Переключить**
 ```
-mosquitto_pub -t nooLiteHub/write/tx-f/15/switch -m ""
+mosquitto_pub -t nooLiteHub/write/txf/15/switch -m ""
 ```
 
