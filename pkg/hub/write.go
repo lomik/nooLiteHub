@@ -59,6 +59,14 @@ func (h *Hub) init() {
 	})
 
 	// TX topics
+	h.write("tx/:ch/power", func(ctx *writeContext) {
+		if ctx.payload == "on" || ctx.payload == "true" {
+			h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdOn})
+		} else {
+			h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdOff})
+		}
+	})
+
 	h.write("tx/:ch/on", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdOn})
 	})
@@ -76,6 +84,14 @@ func (h *Hub) init() {
 	})
 
 	// TX-F topics
+	h.write("txf/:ch/power", func(ctx *writeContext) {
+		if ctx.payload == "on" || ctx.payload == "true" {
+			h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOn})
+		} else {
+			h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOff})
+		}
+	})
+
 	h.write("txf/:ch/on", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdOn})
 	})
