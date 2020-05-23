@@ -64,9 +64,9 @@ func expandResponse(r *mtrf.Response) (topicPayload map[string]string) {
 
 	switch r.Cmd {
 	case mtrf.CmdOff:
-		set("off", "")
+		set("power", "off")
 	case mtrf.CmdOn:
-		set("on", "")
+		set("power", "on")
 	case mtrf.CmdSwitch:
 		set("switch", "")
 	case mtrf.CmdSendState:
