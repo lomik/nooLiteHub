@@ -108,3 +108,11 @@ mosquitto_pub -t nooLiteHub/write/txf/15/off -m ""
 mosquitto_pub -t nooLiteHub/write/txf/15/switch -m ""
 ```
 
+### Пульт
+
+**Привязать**
+1. Перевести модуль в режим привязки, послав сообщение
+```
+mosquitto_pub -t nooLiteHub/write/rx/15/bind -m ""
+```
+2. Перевести переключатель в режим привязки и нажать кнопку, которую нужно привязать
