@@ -83,6 +83,10 @@ func (h *Hub) init() {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdBind})
 	})
 
+	h.write("tx/:ch/unbind", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTX, Ch: ctx.ch, Cmd: mtrf.CmdUnbind})
+	})
+
 	// TX-F topics
 	h.write("txf/:ch/power", func(ctx *writeContext) {
 		if ctx.payload == "on" || ctx.payload == "true" {
@@ -106,6 +110,10 @@ func (h *Hub) init() {
 
 	h.write("txf/:ch/bind", func(ctx *writeContext) {
 		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdBind})
+	})
+
+	h.write("txf/:ch/unbind", func(ctx *writeContext) {
+		h.sendRequest(&mtrf.Request{Mode: mtrf.ModeTXF, Ch: ctx.ch, Cmd: mtrf.CmdUnbind})
 	})
 
 	h.write("txf/:ch/state", func(ctx *writeContext) {
