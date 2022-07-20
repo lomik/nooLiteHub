@@ -69,6 +69,10 @@ func expandResponse(r *mtrf.Response) (topicPayload map[string]string) {
 		set("power", "on")
 	case mtrf.CmdSwitch:
 		set("switch", "")
+	case mtrf.CmdLoadPreset:
+		set("load_preset", "")
+	case mtrf.CmdSavePreset:
+		set("save_preset", "")
 	case mtrf.CmdSendState:
 		switch r.Fmt {
 		case 0:

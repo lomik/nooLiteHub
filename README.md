@@ -67,6 +67,8 @@ write/rx/:ch/bind |  | Привязать выключатель
 recv/rx/:ch/on | | Выключить нагрузку
 recv/rx/:ch/off | | Включить нагрузку
 recv/rx/:ch/switch | | Включить или выключить нагрузку
+recv/rx/:ch/load_preset | | Загрузить сценарий
+recv/rx/:ch/save_preset | | Сохранить сценарий
 recv/rx/:ch/bright_back | | Запущено плавное изменение яркости в обратном направлении
 recv/rx/:ch/stop_reg |  | Плавное изменение яркости завершено
 
